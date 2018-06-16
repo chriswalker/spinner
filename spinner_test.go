@@ -15,7 +15,7 @@ type TestWriter struct {
 }
 
 // Write just adds the supplied data to the output slice
-// fro later inspection
+// for later inspection
 func (tw *TestWriter) Write(data []byte) (int, error) {
 	tw.output = append(tw.output, string(data))
 	return len(data), nil
