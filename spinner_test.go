@@ -28,15 +28,7 @@ func TestSpinner(t *testing.T) {
 	testWriter := &TestWriter{}
 	s.Writer = testWriter
 
-	s.Start()
-	time.Sleep(350 * time.Millisecond)
-	s.Stop()
-
-	for i, r := range expected {
-		if r != testWriter.output[i] {
-			t.Errorf("unexpected output; want '%s', got '%s'\n", r, testWriter.output[i])
-		}
-	}
+	testSpinner(t, s, testWriter, expected)
 }
 
 func TestSpinnerWithPrefix(t *testing.T) {
@@ -53,14 +45,17 @@ func TestSpinnerWithPrefix(t *testing.T) {
 	testWriter := &TestWriter{}
 	s.Writer = testWriter
 
+	testSpinner(t, s, testWriter, expected)
+}
+
+func testSpinner(t *testing.T, s spinner.Spinner, tw *TestWriter, expected []string) {
 	s.Start()
 	time.Sleep(350 * time.Millisecond)
 	s.Stop()
 
 	for i, r := range expected {
-		if r != testWriter.output[i] {
-			t.Errorf("unexpected output; want '%s', got '%s'\n", r, testWriter.output[i])
+		if r != tw.output[i] {
+			t.Errorf("unexpected output; want '%s', got '%s'\n", r, tw.output[i])
 		}
 	}
-
 }
